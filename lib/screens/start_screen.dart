@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:glare_game/screens/game_screen.dart';
+import 'package:glare_game/screens/level_screen.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -13,11 +13,11 @@ class StartScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Welcome to the game!", style: TextStyle(fontSize: 48)),
+            Text("Notes", style: TextStyle(fontSize: 48)),
             Padding(padding: EdgeInsets.all(16)),
             ElevatedButton(
-              child: Text("Start", style: TextStyle(fontSize: 24)),
-              onPressed: () => Get.to(() => GameScreen()),
+              child: Text("To Notes", style: TextStyle(fontSize: 24)),
+              onPressed: () => Get.to(() => LevelScreen()),
             ),
           ],
         ),
