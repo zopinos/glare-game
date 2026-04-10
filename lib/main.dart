@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:glare_game/controllers/navigation_controller.dart';
 import 'package:glare_game/screens/start_screen.dart';
 import 'package:glare_game/services/level_service.dart';
+import 'package:glare_game/widgets/game_widgets.dart';
 import 'dart:ui';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
@@ -10,7 +11,8 @@ Future<void> main() async {
   await Hive.initFlutter();
   await Hive.openBox("storage");
   Get.put(NavigationController());
-  runApp(GameApp());
+  Get.put(LevelService());
+  runApp(ComponentWidgetExample());
 }
 
 class GameApp extends StatelessWidget {
@@ -18,7 +20,6 @@ class GameApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => LevelService());
     return GetMaterialApp(
       scrollBehavior: CustomScrollBehavior(),
       defaultTransition: Transition.noTransition,
