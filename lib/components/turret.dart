@@ -3,12 +3,12 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
-import 'package:glare_game/game/notes_game.dart';
+import 'package:glare_game/game/ball_game.dart';
 
 class Turret extends PositionComponent
-    with DragCallbacks, HasGameReference<NotesGame> {
+    with DragCallbacks, HasGameReference<BallGame> {
   Turret({required super.position, required super.size})
-    : super(anchor: Anchor.center, children: [RectangleHitbox()]);
+    : super(anchor: Anchor.topLeft, children: [RectangleHitbox()]);
 
   final _paint = Paint()
     ..color = const Color.fromARGB(255, 255, 255, 255)

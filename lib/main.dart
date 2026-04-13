@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:glare_game/controllers/navigation_controller.dart';
 import 'package:glare_game/screens/start_screen.dart';
 import 'package:glare_game/services/level_service.dart';
-import 'package:glare_game/widgets/game_widgets.dart';
 import 'dart:ui';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
@@ -12,7 +11,7 @@ Future<void> main() async {
   await Hive.openBox("storage");
   Get.put(NavigationController());
   Get.put(LevelService());
-  runApp(ComponentWidgetExample());
+  runApp(GameApp());
 }
 
 class GameApp extends StatelessWidget {
