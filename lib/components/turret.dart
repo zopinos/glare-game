@@ -3,10 +3,10 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
-import 'package:glare_game/game/ball_game.dart';
+import 'package:glare_game/game/glare_game.dart';
 
 class Turret extends PositionComponent
-    with DragCallbacks, HasGameReference<BallGame> {
+    with DragCallbacks, HasGameReference<GlareGame> {
   Turret({required super.position, required super.size})
     : super(anchor: Anchor.topLeft, children: [RectangleHitbox()]);
 
