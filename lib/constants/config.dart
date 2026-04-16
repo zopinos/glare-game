@@ -8,3 +8,4 @@ const double playerAngularDamping = 5.0;
 const List<double> spawnFrequencies = [0.5, 0.5, 0.5];
 const double hittableSize = 2.0;
 const double spawnOffset = 5.0;
+const double playerMoveFactor = 1.0;

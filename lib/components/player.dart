@@ -29,9 +29,8 @@ class Player extends BodyComponent<GlareGame>
     if (impulse.length < 200.0) return;
 
     impulse.clampLength(200.0, 8000.0);
-    print("impulse: $impulse, length: ${impulse.length}");
     body.linearVelocity = Vector2.zero();
 
-    body.applyLinearImpulse(impulse);
+    body.applyLinearImpulse(impulse * playerMoveFactor);
   }
 }

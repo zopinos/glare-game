@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
@@ -150,16 +149,20 @@ class GlareGame extends Forge2DGame with PanDetector {
       initialVelocity = Vector2(1.0, 0.0) * hittableMaxSpeed;
     }
 
-    print(
-      "randomValue: $randomValue, spawnLocation: $spawnLocation, initialVelocity: $initialVelocity",
-    );
-
     world.add(Hittable(position: spawnLocation, velocity: initialVelocity));
   }
 
   void _finishGame() {
     gameFinished = true;
+
     levelService.completedLevels.add(levelService.currentLevel);
+
+    final currentBestScore =
+        levelService.levelScores[levelService.currentLevel] ?? 0;
+    if (score > currentBestScore) {
+      levelService.levelScores[levelService.currentLevel] = score;
+    }
+
     Get.offAll(() => ResultScreen(score: score));
   }
 

@@ -13,10 +13,10 @@ class StartScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Notes", style: TextStyle(fontSize: 48)),
+            Text("Glare", style: TextStyle(fontSize: 48)),
             Padding(padding: EdgeInsets.all(16)),
             ElevatedButton(
-              child: Text("To Notes", style: TextStyle(fontSize: 24)),
+              child: Text("Start", style: TextStyle(fontSize: 24)),
               onPressed: () => Get.to(() => LevelScreen()),
             ),
           ],
