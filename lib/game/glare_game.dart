@@ -4,10 +4,13 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:glare_game/components/enemy.dart';
 import 'package:glare_game/components/game_bounds.dart';
 import 'package:glare_game/components/hittable.dart';
 import 'package:glare_game/components/player.dart';
+import 'package:glare_game/components/score_text.dart';
 import 'package:glare_game/constants/config.dart';
 import 'package:glare_game/screens/result_screen.dart';
 import 'package:glare_game/services/level_service.dart';
@@ -20,13 +23,14 @@ class GlareGame extends Forge2DGame with PanDetector {
 
   double get width => size.x;
   double get height => size.y;
+  int get currentLevel => levelService.currentLevel;
 
   late Player player;
 
   Vector2? dragVelocity;
 
   var timeLeft = 30.0;
-  var score = 0;
+  final ValueNotifier<int> scoreNotifier = ValueNotifier<int>(0);
 
   late double spawnFrequency;
   var timeSinceLastSpawn = 0.0;
@@ -59,13 +63,18 @@ class GlareGame extends Forge2DGame with PanDetector {
     topLocation = 0.0;
     bottomLocation = gameRect.height;
 
-    spawnFrequency = spawnFrequencies[levelService.currentLevel];
+    spawnFrequency = spawnFrequencies[currentLevel];
 
     camera.viewfinder.anchor = Anchor.topLeft;
 
     //final viewport = camera.viewport as FixedResolutionViewport;
 
-    //viewport.add(TextComponent(text: "hello world", position: Vector2.zero()));
+    //viewport.add(
+    //  TextComponent(text: "Score: $score", position: Vector2.zero()),
+    //);
+
+    final scoreText = ScoreText(position: Vector2(100.0, 50.0));
+    camera.viewport.add(scoreText);
 
     world.add(FinishLevelRectangle());
 
@@ -87,7 +96,9 @@ class GlareGame extends Forge2DGame with PanDetector {
 
     timeSinceLastSpawn += dt;
     if (timeSinceLastSpawn > spawnFrequency) {
-      _spawnHittable();
+      final entityTypes = levelEntityTypes[currentLevel] ?? ["hittable"];
+      final entityType = entityTypes[random.nextInt(entityTypes.length)];
+      _spawnEntity(entityType);
       timeSinceLastSpawn = 0.0;
     }
   }
@@ -105,7 +116,7 @@ class GlareGame extends Forge2DGame with PanDetector {
     player.move(dragVelocity!);
   }
 
-  void _spawnHittable() {
+  void _spawnEntity(String entityType) {
     final randomValue = random.nextDouble();
 
     Vector2 spawnLocation;
@@ -149,21 +160,24 @@ class GlareGame extends Forge2DGame with PanDetector {
       initialVelocity = Vector2(1.0, 0.0) * hittableMaxSpeed;
     }
 
-    world.add(Hittable(position: spawnLocation, velocity: initialVelocity));
+    if (entityType == "hittable") {
+      world.add(Hittable(position: spawnLocation, velocity: initialVelocity));
+    } else if (entityType == "enemy") {
+      world.add(Enemy(position: spawnLocation, velocity: initialVelocity));
+    }
   }
 
   void _finishGame() {
     gameFinished = true;
 
-    levelService.completedLevels.add(levelService.currentLevel);
+    levelService.completedLevels.add(currentLevel);
 
-    final currentBestScore =
-        levelService.levelScores[levelService.currentLevel] ?? 0;
-    if (score > currentBestScore) {
-      levelService.levelScores[levelService.currentLevel] = score;
+    final currentBestScore = levelService.levelScores[currentLevel] ?? 0;
+    if (scoreNotifier.value > currentBestScore) {
+      levelService.levelScores[currentLevel] = scoreNotifier.value;
     }
 
-    Get.offAll(() => ResultScreen(score: score));
+    Get.offAll(() => ResultScreen(score: scoreNotifier.value));
   }
 
   void completeGame() {

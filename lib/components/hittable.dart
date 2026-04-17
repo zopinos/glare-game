@@ -52,7 +52,7 @@ class Hittable extends BodyComponent<GlareGame> with ContactCallbacks {
   @override
   void beginContact(Object other, Contact contact) {
     super.beginContact(other, contact);
-    game.score += 1;
+    game.scoreNotifier.value += 1;
     removeFromParent();
   }
 }
