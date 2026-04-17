@@ -52,7 +52,9 @@ class Enemy extends BodyComponent<GlareGame> with ContactCallbacks {
   @override
   void beginContact(Object other, Contact contact) {
     super.beginContact(other, contact);
-    game.scoreNotifier.value -= 1;
+    if (game.scoreNotifier.value > 0) {
+      game.scoreNotifier.value -= 1;
+    }
     removeFromParent();
   }
 }

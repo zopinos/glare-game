@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter/foundation.dart';
+import 'package:glare_game/constants/config.dart';
 import 'package:glare_game/game/glare_game.dart';
 
 class ScoreText extends PositionComponent with HasGameReference<GlareGame> {
@@ -17,7 +18,8 @@ class ScoreText extends PositionComponent with HasGameReference<GlareGame> {
     );
     add(scoreText);
     void updateLapText() {
-      scoreText.text = "Score: ${scoreNotifier.value}";
+      scoreText.text =
+          "Score: ${scoreNotifier.value}/${scoreRequirements[game.currentLevel]}";
     }
 
     _scoreComponent = TextComponent(

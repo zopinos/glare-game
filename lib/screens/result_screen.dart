@@ -4,7 +4,14 @@ import 'package:glare_game/screens/start_screen.dart';
 
 class ResultScreen extends StatelessWidget {
   final int score;
-  const ResultScreen({super.key, required this.score});
+  final int scoreRequirement;
+  final bool levelCompleted;
+  const ResultScreen({
+    super.key,
+    required this.score,
+    required this.scoreRequirement,
+    required this.levelCompleted,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +21,9 @@ class ResultScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Great work, you got $score points!",
+              levelCompleted
+                  ? "Great work, you got $score/$scoreRequirement points!"
+                  : "Not quite, you got $score/$scoreRequirement points. Try again!",
               style: TextStyle(fontSize: 48),
             ),
             Padding(padding: EdgeInsets.all(16)),

@@ -171,14 +171,22 @@ class GlareGame extends Forge2DGame with PanDetector {
   void _finishGame() {
     gameFinished = true;
 
-    levelService.completedLevels.add(currentLevel);
+    if (scoreRequirements[currentLevel] < scoreNotifier.value) {
+      levelService.completedLevels.add(currentLevel);
+    }
 
     final currentBestScore = levelService.levelScores[currentLevel] ?? 0;
     if (scoreNotifier.value > currentBestScore) {
       levelService.levelScores[currentLevel] = scoreNotifier.value;
     }
 
-    Get.offAll(() => ResultScreen(score: scoreNotifier.value));
+    Get.offAll(
+      () => ResultScreen(
+        score: scoreNotifier.value,
+        scoreRequirement: scoreRequirements[currentLevel],
+        levelCompleted: scoreRequirements[currentLevel] < scoreNotifier.value,
+      ),
+    );
   }
 
   void completeGame() {
