@@ -96,8 +96,9 @@ class GlareGame extends Forge2DGame with PanDetector {
 
     timeSinceLastSpawn += dt;
     if (timeSinceLastSpawn > spawnFrequency) {
-      final entityTypes = levelEntityTypes[currentLevel] ?? ["hittable"];
-      final entityType = entityTypes[random.nextInt(entityTypes.length)];
+      final entityType = random.nextDouble() < spawnRates[currentLevel]
+          ? entityTypes[0]
+          : entityTypes[1];
       _spawnEntity(entityType);
       timeSinceLastSpawn = 0.0;
     }

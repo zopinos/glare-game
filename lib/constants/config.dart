@@ -12,8 +12,8 @@ const double playerMoveFactor = 1.0;
 
 const List<double> spawnFrequencies = [0.5, 0.5, 0.5];
 
-const Map<int, List<String>> levelEntityTypes = {
-  0: ["hittable"],
-  1: ["hittable", "enemy"],
-  2: ["hittable", "enemy"],
-};
+const List<String> entityTypes = ["hittable", "enemy"];
+
+const List<int> scoreRequirements = [20, 20, 20];
+
+const List<double> spawnRates = [1.0, 0.75, 0.5];
