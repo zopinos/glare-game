@@ -6,6 +6,7 @@ import 'package:flame/extensions.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:glare_game/components/debug_components.dart';
 import 'package:glare_game/components/enemy.dart';
 import 'package:glare_game/components/game_bounds.dart';
 import 'package:glare_game/components/hittable.dart';
@@ -41,7 +42,7 @@ class GlareGame extends Forge2DGame with PanDetector {
   late double topLocation;
   late double bottomLocation;
 
-  GlareGame()
+  GlareGame(double gameWidth, double gameHeight)
     : super(
         gravity: Vector2(0, gravity),
         camera: CameraComponent.withFixedResolution(
@@ -67,16 +68,17 @@ class GlareGame extends Forge2DGame with PanDetector {
 
     camera.viewfinder.anchor = Anchor.topLeft;
 
-    //final viewport = camera.viewport as FixedResolutionViewport;
-
-    //viewport.add(
-    //  TextComponent(text: "Score: $score", position: Vector2.zero()),
-    //);
-
-    final scoreText = ScoreText(position: Vector2(100.0, 50.0));
+    final scoreText = ScoreText(
+      position: Vector2(
+        camera.viewport.virtualSize.x / 2,
+        camera.viewport.virtualSize.y / 16,
+      ),
+    );
     camera.viewport.add(scoreText);
 
-    world.add(FinishLevelRectangle());
+    if (debug) {
+      world.add(FinishLevelRectangle());
+    }
 
     world.add(GameBounds());
 
@@ -171,7 +173,7 @@ class GlareGame extends Forge2DGame with PanDetector {
   void _finishGame() {
     gameFinished = true;
 
-    if (scoreRequirements[currentLevel] < scoreNotifier.value) {
+    if (scoreNotifier.value >= scoreRequirements[currentLevel]) {
       levelService.completedLevels.add(currentLevel);
     }
 
@@ -184,7 +186,9 @@ class GlareGame extends Forge2DGame with PanDetector {
       () => ResultScreen(
         score: scoreNotifier.value,
         scoreRequirement: scoreRequirements[currentLevel],
-        levelCompleted: scoreRequirements[currentLevel] < scoreNotifier.value,
+        levelCompleted: scoreNotifier.value >= scoreRequirements[currentLevel],
+        isHighScore: scoreNotifier.value > currentBestScore,
+        level: currentLevel,
       ),
     );
   }
@@ -193,16 +197,5 @@ class GlareGame extends Forge2DGame with PanDetector {
     if (!gameFinished) {
       _finishGame();
     }
-  }
-}
-
-class FinishLevelRectangle extends RectangleComponent
-    with HasGameRef<GlareGame>, TapCallbacks {
-  FinishLevelRectangle()
-    : super(position: Vector2(1.0, 1.0), size: Vector2(2.0, 2.0));
-
-  @override
-  void onTapDown(TapDownEvent event) {
-    gameRef.completeGame();
   }
 }
