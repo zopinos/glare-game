@@ -1,4 +1,5 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:glare_game/components/score_indicator.dart';
 import 'package:glare_game/constants/config.dart';
 import 'package:glare_game/game/glare_game.dart';
 import 'dart:ui';
@@ -53,6 +54,13 @@ class Hittable extends BodyComponent<GlareGame> with ContactCallbacks {
   void beginContact(Object other, Contact contact) {
     super.beginContact(other, contact);
     game.scoreNotifier.value += 1;
+    game.world.add(
+      ScoreIndicator(
+        position: body.position,
+        text: "+1",
+        color: Color.fromARGB(255, 255, 255, 255),
+      ),
+    );
     removeFromParent();
   }
 }
