@@ -3,7 +3,6 @@ import 'package:flame/text.dart';
 import 'package:flutter/material.dart';
 import 'package:glare_game/constants/config.dart';
 import 'package:glare_game/game/glare_game.dart';
-import 'package:glare_game/styling/typography.dart';
 
 class ScoreIndicator extends TextComponent with HasGameReference<GlareGame> {
   ScoreIndicator({
@@ -14,7 +13,9 @@ class ScoreIndicator extends TextComponent with HasGameReference<GlareGame> {
          position: position,
          text: text,
          anchor: Anchor.center,
-         textRenderer: TextPaint(style: TextStyle(color: color, fontSize: 2.0)),
+         textRenderer: TextPaint(
+           style: TextStyle(color: color, fontSize: scoreIndicatorTextSize),
+         ),
        );
 
   var timeSinceSpawn = 0.0;

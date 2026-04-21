@@ -30,7 +30,7 @@ class GlareGame extends Forge2DGame with PanDetector {
 
   Vector2? dragVelocity;
 
-  var timeLeft = 30.0;
+  var timeLeft = gameTimeLength;
   final ValueNotifier<int> scoreNotifier = ValueNotifier<int>(0);
 
   late double spawnFrequency;
@@ -52,7 +52,7 @@ class GlareGame extends Forge2DGame with PanDetector {
       );
 
   @override
-  Color backgroundColor() => const Color.fromARGB(255, 20, 20, 20);
+  Color backgroundColor() => gameBackgroundColor;
 
   @override
   Future<void> onLoad() async {

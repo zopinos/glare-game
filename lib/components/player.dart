@@ -20,15 +20,15 @@ class Player extends BodyComponent<GlareGame>
       userData: this,
     );
 
-    final shape = PolygonShape()..setAsBoxXY(2.5, 2.5);
-    final fixtureDef = FixtureDef(shape)..restitution = 0.75;
+    final shape = PolygonShape()..setAsBoxXY(playerSize, playerSize);
+    final fixtureDef = FixtureDef(shape)..restitution = playerBounciness;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 
   void move(Vector2 impulse) {
-    if (impulse.length < 200.0) return;
+    if (impulse.length < minImpulseForce) return;
 
-    impulse.clampLength(200.0, 8000.0);
+    impulse.clampLength(minImpulseForce, maxImpulseForce);
     body.linearVelocity = Vector2.zero();
 
     body.applyLinearImpulse(impulse * playerMoveFactor);

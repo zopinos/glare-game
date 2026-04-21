@@ -10,7 +10,7 @@ class Enemy extends BodyComponent<GlareGame> with ContactCallbacks {
   @override
   final Vector2 position;
   final Vector2 velocity;
-  final Paint paint = Paint()..color = const Color.fromARGB(255, 255, 64, 64);
+  final Paint enemyPaint = Paint()..color = enemyColor;
 
   @override
   Body createBody() {
@@ -35,7 +35,7 @@ class Enemy extends BodyComponent<GlareGame> with ContactCallbacks {
         width: hittableSize * 2,
         height: hittableSize * 2,
       ),
-      paint,
+      enemyPaint,
     );
   }
 
@@ -56,19 +56,11 @@ class Enemy extends BodyComponent<GlareGame> with ContactCallbacks {
     if (game.scoreNotifier.value > 0) {
       game.scoreNotifier.value -= 1;
       game.world.add(
-        ScoreIndicator(
-          position: body.position,
-          text: "-1",
-          color: Color.fromARGB(255, 255, 64, 64),
-        ),
+        ScoreIndicator(position: body.position, text: "-1", color: enemyColor),
       );
     } else {
       game.world.add(
-        ScoreIndicator(
-          position: body.position,
-          text: "0",
-          color: Color.fromARGB(255, 255, 64, 64),
-        ),
+        ScoreIndicator(position: body.position, text: "0", color: enemyColor),
       );
     }
     removeFromParent();

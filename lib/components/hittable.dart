@@ -1,8 +1,8 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/painting.dart';
 import 'package:glare_game/components/score_indicator.dart';
 import 'package:glare_game/constants/config.dart';
 import 'package:glare_game/game/glare_game.dart';
-import 'dart:ui';
 
 class Hittable extends BodyComponent<GlareGame> with ContactCallbacks {
   Hittable({required this.position, required this.velocity}) : super();
@@ -10,7 +10,7 @@ class Hittable extends BodyComponent<GlareGame> with ContactCallbacks {
   @override
   final Vector2 position;
   final Vector2 velocity;
-  final Paint paint = Paint()..color = const Color.fromARGB(255, 255, 226, 64);
+  final Paint hittablePaint = Paint()..color = hittableColor;
 
   @override
   Body createBody() {
@@ -35,7 +35,7 @@ class Hittable extends BodyComponent<GlareGame> with ContactCallbacks {
         width: hittableSize * 2,
         height: hittableSize * 2,
       ),
-      paint,
+      hittablePaint,
     );
   }
 

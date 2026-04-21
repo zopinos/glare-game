@@ -4,22 +4,16 @@ import 'package:hive_ce/hive.dart';
 class LevelController {
   final storage = Hive.box("storage");
 
-  RxSet<int> completedLevels;
-  RxMap<int, int> levelScores;
+  late RxSet<int> completedLevels;
+  late RxMap<int, int> levelScores;
   int currentLevel = 0;
 
-  LevelController()
-    : completedLevels = <int>{}.obs,
-      levelScores = <int, int>{}.obs {
-    if (storage.get('completedLevels') == null) {
-      storage.put('completedLevels', <int>[]);
-    }
-    completedLevels.value = Set<int>.from(storage.get('completedLevels'));
+  LevelController() {
+    final storedCompletedLevels = storage.get('completedLevels') ?? <int>[];
+    completedLevels = Set<int>.from(storedCompletedLevels).obs;
 
-    if (storage.get('levelScores') == null) {
-      storage.put('levelScores', <int, int>{});
-    }
-    levelScores.value = Map<int, int>.from(storage.get('levelScores'));
+    final storedLevelScores = storage.get('levelScores') ?? <int, int>{};
+    levelScores = Map<int, int>.from(storedLevelScores).obs;
   }
 
   void _save() {
