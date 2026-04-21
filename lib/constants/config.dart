@@ -3,6 +3,7 @@ const double desktopGameHeight = 600.0;
 const double mobileGameWidth = 600.0;
 const double mobileGameHeight = 800.0;
 
+const int totalLevels = 3;
 const double ballSize = 10.0;
 const double boardWidth = 25.0;
 const double gravity = 0.0;

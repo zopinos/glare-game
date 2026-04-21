@@ -1,4 +1,3 @@
-/*
 import 'package:get/get.dart';
 import 'package:hive_ce/hive.dart';
 
@@ -7,44 +6,44 @@ class LevelController {
 
   RxSet<int> completedLevels;
   RxMap<int, int> levelScores;
+  int currentLevel = 0;
 
-  LevelController() : completedLevels = <int>{}.obs {
+  LevelController()
+    : completedLevels = <int>{}.obs,
+      levelScores = <int, int>{}.obs {
     if (storage.get('completedLevels') == null) {
-      storage.put('completedLevels', <int>{});
+      storage.put('completedLevels', <int>[]);
     }
+    completedLevels.value = Set<int>.from(storage.get('completedLevels'));
 
-    completedLevels.value = storage
-        .get('completedLevels')
-        .map(
-          (task) => Task.fromJson(task),
-        )
-        .toList();
+    if (storage.get('levelScores') == null) {
+      storage.put('levelScores', <int, int>{});
+    }
+    levelScores.value = Map<int, int>.from(storage.get('levelScores'));
   }
 
   void _save() {
-    storage.put(
-      'tasks',
-      tasks.map((task) => task.toJson()).toList(),
-    );
+    storage.put('completedLevels', completedLevels.toList());
+    storage.put('levelScores', levelScores);
   }
 
-  void add(Task task) {
-    tasks.add(task);
+  void markLevelCompleted(int level) {
+    completedLevels.add(level);
     _save();
   }
 
-  void changeCompleted(Task task) {
-    task.completed = !task.completed;
-    tasks.refresh();
+  void updateLevelScore(int level, int score) {
+    levelScores[level] = score;
     _save();
   }
 
-  void delete(Task task) {
-    tasks.remove(task);
-    tasks.refresh();
-    _save();
+  int? getLevelScore(int level) => levelScores[level];
+
+  void updateCurrentLevel(int level) {
+    currentLevel = level;
   }
 
-  get size => tasks.length;
+  bool isLevelCompleted(int level) {
+    return completedLevels.contains(level);
+  }
 }
-*/

@@ -13,18 +13,18 @@ import 'package:glare_game/components/hittable.dart';
 import 'package:glare_game/components/player.dart';
 import 'package:glare_game/components/score_text.dart';
 import 'package:glare_game/constants/config.dart';
+import 'package:glare_game/controllers/level_controller.dart';
 import 'package:glare_game/screens/result_screen.dart';
-import 'package:glare_game/services/level_service.dart';
 
 class GlareGame extends Forge2DGame with PanDetector {
-  final levelService = Get.find<LevelService>();
+  final levelController = Get.find<LevelController>();
   final random = Random();
 
   var gameFinished = false;
 
   double get width => size.x;
   double get height => size.y;
-  int get currentLevel => levelService.currentLevel;
+  int get currentLevel => levelController.currentLevel;
 
   late Player player;
 
@@ -174,12 +174,12 @@ class GlareGame extends Forge2DGame with PanDetector {
     gameFinished = true;
 
     if (scoreNotifier.value >= scoreRequirements[currentLevel]) {
-      levelService.completedLevels.add(currentLevel);
+      levelController.markLevelCompleted(currentLevel);
     }
 
-    final currentBestScore = levelService.levelScores[currentLevel] ?? 0;
+    final currentBestScore = levelController.getLevelScore(currentLevel) ?? 0;
     if (scoreNotifier.value > currentBestScore) {
-      levelService.levelScores[currentLevel] = scoreNotifier.value;
+      levelController.updateLevelScore(currentLevel, scoreNotifier.value);
     }
 
     Get.offAll(

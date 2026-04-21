@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glare_game/constants/config.dart';
+import 'package:glare_game/controllers/level_controller.dart';
 import 'package:glare_game/screens/game_screen.dart';
 import 'package:glare_game/screens/start_screen.dart';
-import 'package:glare_game/services/level_service.dart';
 import 'package:glare_game/styling/sizes.dart';
 import 'package:glare_game/styling/typography.dart';
 import 'package:glare_game/widgets/base_page.dart';
-import 'package:glare_game/widgets/responsive_widget.dart';
 
 class LevelScreen extends StatelessWidget {
-  final levelService = Get.find<LevelService>();
+  final levelController = Get.find<LevelController>();
 
   LevelScreen({super.key});
 
-  bool levelAvailable(int level) {
-    return levelService.completedLevels.contains(level - 1) || level == 0;
+  bool isLevelAvailable(int level) {
+    return levelController.isLevelCompleted(level - 1) || level == 0;
   }
 
   @override
   Widget build(BuildContext context) {
-    final levels = Iterable.generate(levelService.totalLevels).expand((level) {
+    final levels = Iterable.generate(totalLevels).expand((level) {
       return [
         Container(
           margin: EdgeInsets.all(Margins.compactMargin),
           child: ElevatedButton(
-            onPressed: levelAvailable(level)
+            onPressed: isLevelAvailable(level)
                 ? () {
-                    levelService.currentLevel = level;
+                    levelController.updateCurrentLevel(level);
                     Get.to(() => GameScreen());
                   }
                 : null,
@@ -34,7 +34,7 @@ class LevelScreen extends StatelessWidget {
               padding: EdgeInsets.all(Paddings.defaultPadding),
               child: Text(
                 textAlign: TextAlign.center,
-                "Level ${level + 1} (${levelAvailable(level) ? (levelService.completedLevels.contains(level) ? "Completed, High Score: ${levelService.levelScores[level] ?? 0}" : "Not completed") : "Not available"})",
+                "Level ${level + 1} (${isLevelAvailable(level) ? (levelController.isLevelCompleted(level) ? "Completed, High Score: ${levelController.levelScores[level] ?? 0}" : "Not completed") : "Not available"})",
                 style: TextStyle(fontSize: FontSizes.base),
               ),
             ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glare_game/controllers/level_controller.dart';
 import 'package:glare_game/controllers/navigation_controller.dart';
 import 'package:glare_game/screens/start_screen.dart';
-import 'package:glare_game/services/level_service.dart';
 import 'dart:ui';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
@@ -10,7 +10,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   await Hive.openBox("storage");
   Get.put(NavigationController());
-  Get.put(LevelService());
+  Get.put(LevelController());
   runApp(GameApp());
 }
 
