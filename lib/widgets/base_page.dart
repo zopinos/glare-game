@@ -10,15 +10,11 @@ class BasePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Expanded(
-          child: Center(
-            child: SizedBox(
-              width: Widths.maxWidth,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: Paddings.largePadding),
-                child: body,
-              ),
-            ),
+        child: SizedBox(
+          width: Widths.maxWidth,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: Paddings.largePadding),
+            child: body,
           ),
         ),
       ),
