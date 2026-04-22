@@ -17,7 +17,7 @@ class ResponsiveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
-    if (useParentWidth ?? false) {
+    if (useParentWidth ?? true) {
       if (screenSize.width < Breakpoints.mobile) {
         return mobile;
       } else {
