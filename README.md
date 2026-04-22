@@ -1,5 +1,7 @@
 # Glare Game
 
+**Disclaimer:** Might not work correctly on Windows Firefox.
+
 A game made with Flutter, Flame Engine and Forge2D. This is the second project for the course [Device-Agnostic Design with Flutter and Dart](https://opencs.aalto.fi/en/courses/device-agnostic-design).
 
 The game can be accessed on the web here: https://zopinos.github.io/glare-game/
