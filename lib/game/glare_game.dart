@@ -28,8 +28,6 @@ class GlareGame extends Forge2DGame with PanDetector {
 
   late Player player;
 
-  Vector2? dragVelocity;
-
   var timeLeft = gameTimeLength;
   final ValueNotifier<int> scoreNotifier = ValueNotifier<int>(0);
 
@@ -108,15 +106,13 @@ class GlareGame extends Forge2DGame with PanDetector {
 
   @override
   void onPanEnd(DragEndInfo info) {
-    dragVelocity = info.velocity;
-
-    _applySwipeImpulse();
+    final dragVelocity = info.velocity;
+    _applySwipeImpulse(dragVelocity);
   }
 
-  void _applySwipeImpulse() {
-    if (dragVelocity == null) return;
-
-    player.move(dragVelocity!);
+  void _applySwipeImpulse(Vector2? impulse) {
+    if (impulse == null) return;
+    player.move(impulse);
   }
 
   void _spawnEntity(String entityType) {
