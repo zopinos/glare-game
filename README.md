@@ -6,6 +6,8 @@ The game can be accessed on the web here: https://zopinos.github.io/glare-game/
 
 The game includes a physics object controlled by the player. The object is controlled by swiping on the screen to the desired direction. The goal of the game is to reach the score indicated by the interface in 30 seconds by hitting the yellow moving objects. In later levels there are also red moving objects that disrupt the score gathering by decreasing the score if the player hits them. There are three levels in total with rising difficulty. The game tracks the progress of the player and saves the current progress with level completions and high scores.
 
+The 3rd level is quite difficult and might even need some luck to be completed.
+
 ## Instructions
 
 The start screen is used to start the game. The start screen leads to the level selection screen where you can select one of three levels. Two of the levels need to be made available by playing the level before.
