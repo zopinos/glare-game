@@ -3,7 +3,7 @@ class Widths {
 }
 
 class Breakpoints {
-  static double mobile = 720;
+  static double mobile = 880;
 }
 
 class Margins {

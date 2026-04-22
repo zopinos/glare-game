@@ -60,7 +60,10 @@ class LevelScreen extends StatelessWidget {
           ),
           ResponsiveWidget(
             mobile: Column(children: levels),
-            desktop: Row(children: levels),
+            desktop: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: levels,
+            ),
           ),
           Padding(padding: EdgeInsets.all(Paddings.defaultPadding)),
           ElevatedButton(
