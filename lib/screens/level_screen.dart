@@ -7,6 +7,7 @@ import 'package:glare_game/screens/start_screen.dart';
 import 'package:glare_game/styling/sizes.dart';
 import 'package:glare_game/styling/typography.dart';
 import 'package:glare_game/widgets/base_page.dart';
+import 'package:glare_game/widgets/responsive_widget.dart';
 
 class LevelScreen extends StatelessWidget {
   final levelController = Get.find<LevelController>();
@@ -34,7 +35,7 @@ class LevelScreen extends StatelessWidget {
               padding: EdgeInsets.all(Paddings.defaultPadding),
               child: Text(
                 textAlign: TextAlign.center,
-                "Level ${level + 1} (${isLevelAvailable(level) ? (levelController.isLevelCompleted(level) ? "Completed, High Score: ${levelController.levelScores[level] ?? 0}" : "Not completed") : "Not available"})",
+                "Level ${level + 1}\n(${isLevelAvailable(level) ? (levelController.isLevelCompleted(level) ? "Completed, High Score: ${levelController.levelScores[level] ?? 0}" : "Not completed") : "Not available"})",
                 style: TextStyle(fontSize: FontSizes.base),
               ),
             ),
@@ -57,7 +58,10 @@ class LevelScreen extends StatelessWidget {
               style: TextStyle(fontSize: FontSizes.xxl),
             ),
           ),
-          ...levels,
+          ResponsiveWidget(
+            mobile: Column(children: levels),
+            desktop: Row(children: levels),
+          ),
           Padding(padding: EdgeInsets.all(Paddings.defaultPadding)),
           ElevatedButton(
             child: Text(
