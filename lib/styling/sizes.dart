@@ -1,5 +1,5 @@
 class Widths {
-  static double maxWidth = 900;
+  static double maxWidth = 1020;
 }
 
 class Breakpoints {
