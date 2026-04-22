@@ -62,6 +62,7 @@ class LevelScreen extends StatelessWidget {
             mobile: Column(children: levels),
             desktop: Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: levels,
             ),
           ),

@@ -1,9 +1,9 @@
 class Widths {
-  static double maxWidth = 720;
+  static double maxWidth = 900;
 }
 
 class Breakpoints {
-  static double mobile = 880;
+  static double mobile = 900;
 }
 
 class Margins {
